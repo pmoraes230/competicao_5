@@ -130,3 +130,21 @@ main {
 .bg_header {
     background-color: #eeebe7
 }
+
+.input_validation {
+    border-color: var(--laranja);
+    background-color: transparent;
+}
+
+.container_validation {
+    margin: 10rem 0;
+} 
+
+.btn_laranja_border {
+    border-color: var(--laranja);
+    background-color: transparent;
+}
+
+.btn_laranja_border:hover {
+    box-shadow: 0 4px 4px 0 var(--laranja);
+}
