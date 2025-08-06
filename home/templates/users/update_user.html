@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+{% block header %}
+{% include "partials/header/header.html" %}
+{% endblock %}
+
+<main class="container">
+    {% if messages %}
+    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 color_vermelho" id="messageModalLabel">Aviso</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group">
+                        {% for message in messages %}
+                        <li class="{{ message.tags }} list-group-item color_vermelho">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn_laranja color_cinza"
+                        data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <h1 class="h1 text-center color_vermelho">Atualizar Usuário</h1>
+
+    <form method="post" class="container_form mt-4">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="name" class="form-label color_vermelho">Nome:</label>
+            <input type="text" name="name" id="name" class="form-control color_vermelho" placeholder="insira seu nome completo" value="{{ user.nome }}">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label color_vermelho">Email:</label>
+            <input type="text" name="email" id="email" class="form-control color_vermelho" placeholder="insira seu Email" value="{{ user.email }}">
+        </div>
+        <div class="mb-3">
+            <label for="cpf" class="form-label color_vermelho">CPF:</label>
+            <input type="text" name="cpf" id="cpf" class="form-control color_vermelho" placeholder="insira seu Email" max="14" value="{{ user.cpf }}">
+        </div>
+        <div class="mb-3">
+            <label for="profile" class="form-label color_vermelho">Perfil:</label>
+            <select name="profile" id="profile" class="form-select color_vermelho">
+                <option value="" disabled selected>Escolha um perfil</option>
+                {% for profile in profiles %}
+                    {% if profile.id == user.perfil.id %}
+                        <option value="{{ profile.id }}" selected>{{ profile.nome }}</option>
+                    {% else %}
+                        <option value="{{ profile.id }}">{{ profile.nome }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3 text-center">
+            <button type="submit" class="btn btn_verde color_cinza">Atualizar cadastro usuário</button>
+            <a href="{% url 'list_user' %}" class="btn btn_vermelho color_cinza">Voltar</a>
+        </div>
+    </form>
+</main>
+
+{% endblock %}
+{% block footer %}
+{% include "partials/footer/footer.html" %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'scripts/format_cpf.js' %}"></script>
+<script src="{% static 'scripts/password_confirmation.js' %}"></script>
+{% endblock %}

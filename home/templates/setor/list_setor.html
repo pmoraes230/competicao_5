@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+{% block header %}
+{% include "partials/header/header.html" %}
+{% endblock %}
+
+<main class="container">
+    {% if messages %}
+    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 color_vermelho" id="messageModalLabel">Aviso</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group">
+                        {% for message in messages %}
+                        <li class="{{ message.tags }} list-group-item color_vermelho">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn_laranja color_cinza"
+                        data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <h1 class="h1 text-center color_vermelho">Lista de setores</h1>
+    <div class="row">
+        {% for setor in setors %}
+        <div class="col-sm-4 mb-3 mb-sm-0">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title color_vermelho">Nome: <span class="color_verde">{{ setor.nome }}</span></h5>
+                    <p class="card-text color_vermelho">Quantidade de ingressos: <span class="color_verde">{{ setor.quantidade_ingresso }}</span></p>
+                    <p class="card-text color_vermelho">Preço deste setor: <span class="color_verde">{{ setor.preco }}</span></p>
+                    <p class="card-text color_vermelho">Evento ligado: <span class="color_verde">{{ setor.evento.nome }}</span></p>
+                    <a href="{% url 'update_setor' setor.id %}" class="btn btn_verde color_cinza">Editar setor</a>
+                    <a href="{% url 'delete_setor' setor.id %}" class="btn btn_vermelho color_cinza">Apagar usuário</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="color_vermelho text-center">Sem setor neste evento</p>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3 text-center">
+        <a href="{% url 'register_setor' %}" class="btn btn_laranja color_cinza">Cadastrar novo setor</a>
+    </div>
+</main>
+{% endblock %}
+
+{% block footer %}
+{% include "partials/footer/footer.html" %}
+{% endblock %}

@@ -1,0 +1,36 @@
+.img_deteils {
+    height: 45%;
+    max-width: 387px;
+}
+
+.img_event {
+    width: 15rem;
+    height: auto;
+    margin: 0 1%;
+}
+
+.span_inf {
+    background-color: var(--laranja);
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #ebeaea;
+}
+
+.container_date {
+    display: flex;
+    gap: 5px;
+}
+
+.info_event{
+    display: flex;
+    flex-direction: column;
+}
+
+.description {
+    border-bottom: 3px solid var(--laranja);
+}
+
+.buttons_admin_event {
+    display: flex;
+    gap: 10px;
+}

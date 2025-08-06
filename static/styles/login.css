@@ -1,0 +1,28 @@
+.content_form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+
+.bg-login {
+    position: absolute;
+    right: 0;
+    height: 100vh;
+    width: 60rem;
+}
+
+.header_login {
+    text-align: center;
+}
+
+.password_container {
+    display: flex;
+}
+
+.eye_img {
+    position: absolute;
+    left: 33%;
+}
+

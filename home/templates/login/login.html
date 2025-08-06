@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_extra %}
+<link rel="stylesheet" href="{% static 'styles/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="d-flex">
+    {% if messages %}
+    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 color_vermelho" id="messageModalLabel">Aviso</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group">
+                        {% for message in messages %}
+                            <li class="{{ message.tags }} list-group-item color_vermelho">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn_laranja color_cinza" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+
+    <div class="content_form">
+        <div class="header_login">
+            <img src="{% static 'icons/senac.png' %}" alt="icone_senac">
+            <h2 class="h2 color_vermelho">Music hall</h2>
+            <h4 class="h4 color_vermelho">Login</h4>
+        </div>
+        <form method="post" class="container_login">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="login" class="form-label color_vermelho">Login</label>
+                <input type="text" name="login" id="login" class="form-control color_vermelho" placeholder="Email ou CPF">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label color_vermelho">Senha</label>
+                <div class="password_container">
+                    <input type="password" name="password" id="password" class="form-control color_vermelho" placeholder="Sua senha">
+                    <button type="button" class="btn eye_img" id="button_password"><img src="{% static "icons/eye.svg" %}" alt="icon_eye" style="width: 25px;" id="eye"></button>
+                </div>
+            </div>
+
+            <div class="mb-3 text-center">
+                <button type="submit" class="btn btn_laranja color_cinza">Entrar</button>
+            </div>
+        </form>
+    </div>
+    <div class="img_login">
+        <img src="{% static 'img/bg_login.png' %}" alt="icone_login"class="bg-login">
+    </div>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'scripts/see_password.js' %}"></script>
+{% endblock  %}

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+{% block header %}
+{% include "partials/header/header.html" %}
+{% endblock %}
+
+<main class="container">
+    {% if messages %}
+    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 color_vermelho" id="messageModalLabel">Aviso</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group">
+                        {% for message in messages %}
+                        <li class="{{ message.tags }} list-group-item color_vermelho">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn_laranja color_cinza"
+                        data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <h1 class="h1 text-center color_vermelho">Cadastrar Evento</h1>
+
+    <form method="post" class="container_form mt-4" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="name" class="form-label color_vermelho">Nome:</label>
+            <input type="text" name="name" id="name" class="form-control color_vermelho" placeholder="insira seu nome completo">
+        </div>
+        <div class="mb-3">
+            <label for="limit_peaple" class="form-label color_vermelho">Capacidade de limite de pessoas:</label>
+            <input type="text" name="limit_peaple" id="limit_peaple" class="form-control color_vermelho" placeholder="Limite de pessoas">
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label color_vermelho">Imagem:</label>
+            <input type="file" name="image" id="image" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="datetime" class="form-label color_vermelho">data e horário do evento:</label>
+            <input type="datetime-local" name="datetime" id="datetime" class="form-control color_vermelho">
+        </div>
+        <div class="mb-3">
+            <label for="describle" class="form-label color_vermelho">Descrição:</label>
+            <textarea name="describle" id="describle" class="form-control" rows="5" style="resize: none;"></textarea>
+        </div>
+
+        <div class="mb-3 text-center">
+            <button type="submit" class="btn btn_verde color_cinza">Cadastrar novo evento</button>
+            <a href="{% url 'home' %}" class="btn btn_vermelho color_cinza">Voltar</a>
+        </div>
+    </form>
+</main>
+
+{% endblock %}
+{% block footer %}
+{% include "partials/footer/footer.html" %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'scripts/format_cpf.js' %}"></script>
+<script src="{% static 'scripts/password_confirmation.js' %}"></script>
+{% endblock %}
