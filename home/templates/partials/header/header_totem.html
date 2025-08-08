@@ -2,25 +2,13 @@
 
 <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
-        <a class="navbar-brand icon_header_senac" href="{% url 'home' %}"><img src="{% static 'icons/senac.png' %}" alt=""></a>
+        <a class="navbar-brand icon_header_senac" href="{% url 'totem' %}"><img src="{% static 'icons/senac.png' %}" alt=""></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse space_menu" id="navbarNavDropdown">
+        <div class="collapse navbar-collapse space_menu_totem" id="navbarNavDropdown">
             <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link color_vermelho_header" href="{% url 'list_user' %}">Usuários</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link color_vermelho_header" href="{% url 'register_event' %}">Cadastrar eventos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link color_vermelho_header" href="{% url 'dash' %}">Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link color_vermelho_header" href="{% url 'totem' %}">Validador</a>
-                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle color_vermelho_header" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">

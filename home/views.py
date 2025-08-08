@@ -52,6 +52,12 @@ def login(request):
                     if user.perfil.nome == "Totem":
                         return redirect("totem")
                     return redirect("home")
+                else:
+                    messages.error(request, "Senha incorreta")
+                    return redirect('login')
+            else:
+                    messages.error(request, "Usuário não encontrado")
+                    return redirect('login')
         except models.Usuario.DoesNotExist:
             messages.error(request, "Usuário não encontrado.")
             return redirect('login')

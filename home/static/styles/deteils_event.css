@@ -1,5 +1,4 @@
 .img_deteils {
-    height: 45%;
     max-width: 387px;
 }
 
@@ -14,6 +13,10 @@
     padding: 5px 10px;
     border-radius: 5px;
     color: #ebeaea;
+}
+
+.gap {
+    gap: 15%;
 }
 
 .container_date {

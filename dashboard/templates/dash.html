@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_extra %}
+<link rel="stylesheet" href="{% static 'styles/deteils_event.css' %}">
+{% endblock %}
+
+{% block content %}
+{% block header %}
+{% include "partials/header/header.html" %}
+{% endblock %}
+
+<main class="container">
+    {% if messages %}
+    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 color_vermelho font_weight" id="messageModalLabel">Aviso</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group">
+                        {% for message in messages %}
+                        <li class="{{ message.tags }} list-group-item color_vermelho">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn_laranja color_cinza"
+                        data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="container_dash">
+        <h1 class="h1 text-center color_vermelho font_weight">Dashboard</h1>
+        <form method="post" class="container_form">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="event" class="form-label color_vermelho">Pesquise o nome no evento:</label>
+                <input type="text" name="event" id="event" class="form-control color_vermelho input_validation" placeholder="Insira o Nome do evento aqui">
+            </div>
+            <div class="mb-3 text-center">
+                <button type="submit" class="btn btn_laranja_border color_preto">Pesquisar</button>
+            </div>
+        </form>
+    </div>
+
+    {% if event %}
+    <div class="d-flex gap mt-4">
+        <div class="img_event">
+            <img src="{{ event.imagem.url }}" alt="" class="rounded img_deteils">
+        </div>
+        <div class="info_event">
+            <h1 class="h1 color_vermelho">{{ event.nome }}</h1>
+            <div class="container_date">
+                <span class="span_inf">{{ event.data|date:"d/m/Y" }}</span>
+                <span class="span_inf">{{ event.data|time:"H:i" }}</span>
+            </div>
+            <div class="description mt-4 mb-3">
+                <h4 class="h4 color_vermelho">Descrição</h4>
+                <p class="w-80 color_vermelho">{{ event.descricao }}</p>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="h3 color_vermelho font_weight mt-4">Informações de venda por setor</h3>
+    <div class="row">
+        {% if grafic_sector %}
+        {% for item in grafic_sector %}
+        <div class="col-md-6 text-center mb-3">
+            <img src="data:image/png;base64, {{ item.grafic }}" alt="grafic of {{ item.sector }}" class="img-fluid">
+        </div>
+        {% endfor %}
+        {% else %}
+        <p class="color_vermelho">Sem nenhum dados de ingressos</p>
+        {% endif %}
+    </div>
+    {% endif %}
+</main>
+
+{% endblock %}
+{% block footer %}
+{% include "partials/footer/footer.html" %}
+{% endblock %}
