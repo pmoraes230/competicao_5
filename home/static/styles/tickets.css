@@ -1,11 +1,9 @@
 .img_event {
-    width: 20rem;
     height: auto;
-    margin: 0 1%;
+    margin: 0 2%;
 }
 
 .img_deteils {
-    height: 30%;
     max-width: 387px;
 }
 

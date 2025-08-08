@@ -89,6 +89,9 @@ main {
     color: #bbb9b6;
 }
 
+.w-70 {
+    width: 70%;
+}
 
 .color_verde {
     color: var(--verde);
@@ -159,4 +162,22 @@ main {
 
 .btn_laranja_border:hover {
     box-shadow: 0 4px 4px 0 var(--laranja);
+}
+
+.btn_laranja_verde {
+    border-color: var(--verde);
+    background-color: transparent;
+}
+
+.btn_laranja_verde:hover {
+    box-shadow: 0 4px 4px 0 var(--verde);
+}
+
+.btn_laranja_vermelho {
+    border-color: var(--vermelho);
+    background-color: transparent;
+}
+
+.btn_laranja_vermelho:hover {
+    box-shadow: 0 4px 4px 0 var(--vermelho);
 }

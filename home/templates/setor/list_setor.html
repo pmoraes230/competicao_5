@@ -52,7 +52,8 @@
     </div>
 
     <div class="mb-3 text-center">
-        <a href="{% url 'register_setor' %}" class="btn btn_laranja color_cinza">Cadastrar novo setor</a>
+        <a href="{% url 'register_setor' event.id %}" class="btn btn_laranja_border color_preto">Cadastrar novo setor</a>
+        <a href="{% url 'deteils_event' event.id %}" class="btn btn_laranja_vermelho color_preto">Voltar ao evento</a>
     </div>
 </main>
 {% endblock %}

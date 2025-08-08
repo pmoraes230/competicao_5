@@ -46,37 +46,37 @@
             </div>
             <div class="description mt-4 mb-3">
                 <h4 class="h4 color_vermelho">Descrição</h4>
-                <p class="w-80 color_vermelho">{{ events.descricao }}</p>
+                <p class="w-70 color_vermelho">{{ events.descricao }}</p>
             </div>
             <div class="buttons_admin_event">
                 <a href="{% url 'update_event' events.id %}" class="btn btn_laranja color_cinza">Editar evento</a>
-                <a href="#" class="btn btn_verde color_cinza">Ingressos gerados</a>
+                <a href="{% url 'deteils_event' events.id %}" class="btn btn_verde color_cinza">Voltar ao evento</a>
                 <a href="{% url 'delete_event' events.id %}" class="btn btn_vermelho color_cinza">Apagar evento</a>
                 <a href="{% url 'list_setores' events.id %}" class="btn btn_vermelho_escuro color_cinza">Lista de
                     setores</a>
             </div>
-            <h1 class="h1 text-center color_vermelho mt-4">INGRESSOS</h1>
-            <div class="row">
-                {% for ticket in tickets %}
-                <div class="col-sm-4 mb-3 mb-sm-0">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title color_vermelho">Nome do cliente: <span class="color_verde">{{ ticket.cliente.nome }}</span></h5>
-                            <p class="card-text color_vermelho">Setor comprado: <span class="color_verde">{{ ticket.setor.nome }}</span></p>
-                            <p class="card-text color_vermelho">Evento comprado: <span class="color_verde">{{ ticket.evento.nome }}</span></p>
-                            <p class="card-text color_vermelho">Data do evento: <span class="color_verde">{{ ticket.evento.data|date:"d/m/Y H:i" }}</span></p>
-                            <p class="card-text color_vermelho">Data de emissão do ingresso: <spanclass="color_verde">{{ ticket.data_emissao|date:"d/m/Y H:i" }}</span></p>
-                            <p class="card-text color_vermelho">Status do ingresso: <span class="color_verde">{{ ticket.status }}</span></p>
-                            <p class="card-text color_vermelho">Còdigo de validação: <span class="color_verde">{{ ticket.id_ingresso }}</span></p>
-                            <a href="{% url 'export_ticket_pdf' ticket.id_ingresso %}" class="btn btn_verde color_cinza">Exportar ingresso</a>
-                        </div>
-                    </div>
+        </div>
+    </div>
+    <h1 class="h1 text-center color_vermelho mt-4">INGRESSOS</h1>
+    <div class="row">
+        {% for ticket in tickets %}
+        <div class="col-sm-4 mb-3 mb-sm-0">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title color_vermelho">Nome do cliente: <span class="color_verde">{{ ticket.cliente.nome }}</span></h5>
+                    <p class="card-text color_vermelho">Setor comprado: <span class="color_verde">{{ ticket.setor.nome }}</span></p>
+                    <p class="card-text color_vermelho">Evento comprado: <span class="color_verde">{{ ticket.evento.nome }}</span></p>
+                    <p class="card-text color_vermelho">Data do evento: <span class="color_verde">{{ ticket.evento.data|date:"d/m/Y H:i" }}</span></p>
+                    <p class="card-text color_vermelho">Data de emissão do ingresso: <spanclass="color_verde">{{ ticket.data_emissao|date:"d/m/Y H:i" }}</span></p>
+                    <p class="card-text color_vermelho">Status do ingresso: <span class="color_verde">{{ ticket.status }}</span></p>
+                    <p class="card-text color_vermelho">Còdigo de validação: <span class="color_verde">{{ ticket.id_ingresso }}</span></p>
+                    <a href="{% url 'export_ticket_pdf' ticket.id_ingresso %}" class="btn btn_verde color_cinza">Exportar ingresso</a>
                 </div>
-                {% empty %}
-                <p class="text-center color_vermelho">Sem ingressos gerados</p>
-                {% endfor %}
             </div>
         </div>
+        {% empty %}
+        <p class="text-center color_vermelho">Sem ingressos gerados</p>
+        {% endfor %}
     </div>
 </main>
 

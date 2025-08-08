@@ -7,7 +7,11 @@
 
 {% block content %}
 {% block header %}
-{% include "partials/header/header.html" %}
+{% if user_role == "Staff" %}
+        {% include "partials/header/header_staff.html" %}
+    {% else %}
+        {% include "partials/header/header.html" %}
+    {% endif %}
 {% endblock %}
 
 <main class="container">
@@ -27,7 +31,7 @@
                     </ul>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn_laranja color_cinza"
+                    <button type="button" class="btn btn_laranja_border color_preto"
                         data-bs-dismiss="modal">Fechar</button>
                 </div>
             </div>

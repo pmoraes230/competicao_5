@@ -186,6 +186,44 @@ def update_user(request, id_user):
     })
     return render(request, "users/update_user.html", context)
 
+def alter_password(request, id_user):
+    context = get_user_profile(request)
+    user = models.Usuario.objects.get(id=id_user)
+    
+    if request.method == "POST":
+        old_password = request.POST.get("old_password")
+        new_password = request.POST.get("password")
+        conf_password = request.POST.get("password2")
+        
+        if not all([old_password, new_password, conf_password]):
+            messages.info(request, "Preencha os campos antes de enviar")
+            return redirect("alter_password", id_user=id_user)
+        
+        try:
+            user = models.Usuario.objects.get(id=id_user)
+
+            # Verifica se a senha antiga está correta
+            if not check_password(old_password, user.senha):
+                messages.info(request, "Senha antiga incorreta")
+                return redirect("alter_password", id_user=id_user)
+
+            # Verifica se a nova senha coincide com a confirmação
+            if new_password != conf_password:
+                messages.info(request, "Nova senha não coincide com o campo de confirmação")
+                return redirect("alter_password", id_user=id_user)
+
+            # Atualiza a senha do usuário
+            user.senha = make_password(new_password)
+            user.save()
+            messages.success(request, "Sua senha foi alterada com sucesso.")
+            return redirect("alter_password", id_user=id_user)
+
+        except models.Usuario.DoesNotExist:
+            messages.error(request, "Usuário não encontrado")
+            return redirect("alter_password", id_user=id_user)
+        
+    return render(request, "users/alter_password.html", context)
+
 def delete_user(request, id_user):
     try:
         user = models.Usuario.objects.get(id=id_user)
@@ -201,6 +239,44 @@ def delete_user(request, id_user):
     except models.Usuario.DoesNotExist:
         messages.error(request, "Usuário não encontrado")
         return redirect("list_user")
+    
+def register_client(request, id_event):
+    context = get_user_profile(request)
+    context['event'] = models.Evento.objects.get(id=id_event)
+    
+    if request.method == "POST":
+        name_client = request.POST.get("name")
+        email_clint = request.POST.get("email")
+        cpf_client = request.POST.get("cpf").replace(".", "").replace("-", "")
+        
+        if not all([name_client, email_clint, cpf_client]):
+            messages.info(request, "Todos os campos são obrigatórios")
+            return redirect("register_client", id_event=id_event)
+        
+        if models.Cliente.objects.filter(email=email_clint).exists():
+            messages.info(request, "email já cadastrado no sistema")
+            return redirect("register_client", id_event=id_event)
+        elif models.Cliente.objects.filter(cpf=cpf_client).exists():
+            messages.info(request, "CPF já cadastrado no sistema")
+            return redirect("register_client", id_event=id_event)
+        
+        try:
+            new_client = models.Cliente.objects.create(
+                nome=name_client,
+                email=email_clint,
+                cpf=cpf_client
+            )
+            new_client.full_clean()
+            new_client.save()
+            
+            messages.success(request, f"Cliente {new_client.nome} cadastrado com sucesso no sistema.")
+            return redirect("deteils_event", id_event=id_event)
+        except ValueError as ve:
+            messages.error(request, f"Erro ao cadastrar novo cliente no sistema: {str(ve)}")
+            return redirect("register_client", id_event=id_event)
+            
+    
+    return render(request, "users/register_client.html", context)
     
 def deteils_event(request, id_event):
     context = get_user_profile(request)
@@ -269,18 +345,20 @@ def buy_ticket(request, id_event):
             
             if not setor_form:
                 messages.info(request, "Por favor, escolha um setor")
-                return redirect("deteils_event", id_event=id_event)
+                return redirect("buy_ticket", id_event=id_event)
             
             try:
                 setor_event = models.Setor.objects.get(id=setor_form)
             except models.Setor.DoesNotExist:
                 messages.error(request, "Setor não encontrado")
-                return redirect("deteils_event", id_event=id_event)
+                return redirect("buy_ticket", id_event=id_event)
             
             if amount == 0:
                 messages.info(request, "Por favor, Escolha a quantidade de ingressos")
+                return redirect("buy_ticket", id_event=id_event)
             elif amount > 10:
                 messages.info(request, "O máximo de ingresso é 10 por cada cliente")
+                return redirect("buy_ticket", id_event=id_event)
             else:
                 tickets = []
                 for _ in range(amount):
@@ -426,12 +504,16 @@ def list_setor(request, id_event):
     event = models.Evento.objects.get(id=id_event)
     setor = models.Setor.objects.filter(evento=event)
     
-    context['setors'] = setor
+    context.update({
+        'setors': setor,
+        'event': event
+    })
     return render(request, "setor/list_setor.html", context)
 
-def register_setor(request):
+def register_setor(request, event_id):
     context = get_user_profile(request)
     context['events'] = models.Evento.objects.all().order_by("-id")
+    context['event'] = models.Evento.objects.get(id=event_id)
     
     if request.method == "POST":
         name_setor = request.POST.get("name")

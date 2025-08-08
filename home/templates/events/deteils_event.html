@@ -7,7 +7,11 @@
 
 {% block content %}
 {% block header %}
-{% include "partials/header/header.html" %}
+{% if user_role == "Staff" %}
+        {% include "partials/header/header_staff.html" %}
+    {% else %}
+        {% include "partials/header/header.html" %}
+    {% endif %}
 {% endblock %}
 
 <main class="container mt-4">
@@ -39,7 +43,7 @@
         <div class="img_event">
             <img src="{{ events.imagem.url }}" alt="" class="rounded img_deteils">
         </div>
-        <div class="info_event">
+        <div class="info_event w-50">
             <h1 class="h1 color_vermelho">{{ events.nome }}</h1>
             <div class="container_date">
                 <span class="span_inf">{{ events.data|date:"d/m/Y" }}</span>
@@ -49,12 +53,14 @@
                 <h4 class="h4 color_vermelho">Descrição</h4>
                 <p class="w-80 color_vermelho">{{ events.descricao }}</p>
             </div>
+            {% if user_role == "Administrador" %}
             <div class="buttons_admin_event">
                 <a href="{% url 'update_event' events.id %}" class="btn btn_laranja color_cinza">Editar evento</a>
                 <a href="{% url 'tickets' events.id %}" class="btn btn_verde color_cinza">Ingressos gerados</a>
                 <a href="{% url 'delete_event' events.id %}" class="btn btn_vermelho color_cinza">Apagar evento</a>
                 <a href="{% url 'list_setores' events.id %}" class="btn btn_vermelho_escuro color_cinza">Lista de setores</a>
             </div>
+            {% endif %}
 
             {% if not client %}
             <h4 class="h4 color_vermelho mt-4">Pesquisar cliente</h4>
@@ -69,7 +75,7 @@
                 <div class="mb-3">
                     <button type="submit" name="search_names" class="btn btn_verde color_cinza">Pesquisar
                         cliente</button>
-                    <a href="#" class="btn btn_laranja color_cinza">Cadastrar cliente</a>
+                    <a href="{% url 'register_client' events.id %}" class="btn btn_laranja color_cinza">Cadastrar cliente</a>
                 </div>
             </form>
             {% if client_search %}

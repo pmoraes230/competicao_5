@@ -15,7 +15,7 @@ def validador(request):
         try:
             id_ticket = models.Ingresso.objects.get(id_ingresso=code_input)
             if id_ticket.status == "validado":
-                messages.info(request, "Ingresso já validado.")
+                messages.info(request, "Ingresso já validado, tente outro ingresso.")
                 return redirect("totem")
             elif id_ticket.status == "cancelado":
                 messages.info(request, "Ingresso ingresso cancelado.")
@@ -23,7 +23,7 @@ def validador(request):
             elif id_ticket.status == "emitido":
                 id_ticket.status = "validado"
                 id_ticket.save()
-                messages.success(request, "Ingresso válidado.")
+                messages.success(request, "Ingresso válidado com sucesso.")
                 return redirect("totem")
             else:
                 messages.error(request, "Ingresso inválido.")

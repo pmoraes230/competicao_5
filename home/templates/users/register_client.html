@@ -3,7 +3,13 @@
 
 {% block content %}
 {% block header %}
-{% include "partials/header/header.html" %}
+    {% if user_role == "Staff" %}
+        {% include "partials/header/header_staff.html" %}
+    {% elif user_role == "Totem" %}
+        {% include "partials/header/header_totem.html" %}
+    {% else %}
+        {% include "partials/header/header.html" %}
+    {% endif %}
 {% endblock %}
 
 <main class="container">
@@ -23,7 +29,7 @@
                     </ul>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn_laranja color_cinza"
+                    <button type="button" class="btn btn_laranja_border color_preto"
                         data-bs-dismiss="modal">Fechar</button>
                 </div>
             </div>
@@ -31,7 +37,8 @@
     </div>
     {% endif %}
 
-    <h1 class="h1 text-center color_vermelho">Cadastrar setor</h1>
+    <h1 class="h1 text-center color_vermelho">Cadastrar de cliente</h1>
+
     <form method="post" class="container_form mt-4">
         {% csrf_token %}
         <div class="mb-3">
@@ -39,26 +46,17 @@
             <input type="text" name="name" id="name" class="form-control color_vermelho" placeholder="insira seu nome completo">
         </div>
         <div class="mb-3">
-            <label for="tickets" class="form-label color_vermelho">Quantidade de ingressos:</label>
-            <input type="number" name="tickets" id="tickets" class="form-control color_vermelho" placeholder="insira a quantidade de ingressos neste setor">
+            <label for="email" class="form-label color_vermelho">Email:</label>
+            <input type="email" name="email" id="email" class="form-control color_vermelho" placeholder="insira seu email">
         </div>
         <div class="mb-3">
-            <label for="price" class="form-label color_vermelho">Preço do evento:</label>
-            <input type="number" name="price" id="price" class="form-control color_vermelho" placeholder="Preço do setor">
-        </div>
-        <div class="mb-3">
-            <label for="profile" class="form-label color_vermelho">Perfil:</label>
-            <select name="profile" id="profile" class="form-select color_vermelho">
-                <option value="" disabled selected>Escolha um perfil</option>
-                {% for event in events %}
-                    <option value="{{ event.id }}">{{ event.nome }}</option>
-                {% endfor %}
-            </select>
+            <label for="cpf" class="form-label color_vermelho">CPF:</label>
+            <input type="text" name="cpf" id="cpf" class="form-control color_vermelho" placeholder="insira seu CPF" max="14" >
         </div>
 
         <div class="mb-3 text-center">
-            <button type="submit" class="btn btn_verde color_cinza">Atualizar cadastro usuário</button>
-            <a href="{% url 'list_setores' event.id %}" class="btn btn_vermelho color_cinza">Voltar</a>
+            <button type="submit" class="btn btn_laranja_verde color_preto">Cadastrar novo usuário</button>
+            <a href="{% url 'deteils_event' event.id %}" class="btn btn_laranja_vermelho color_preto">Voltar</a>
         </div>
     </form>
 </main>
@@ -66,4 +64,9 @@
 {% endblock %}
 {% block footer %}
 {% include "partials/footer/footer.html" %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'scripts/format_cpf.js' %}"></script>
+<script src="{% static 'scripts/password_confirmation.js' %}"></script>
 {% endblock %}

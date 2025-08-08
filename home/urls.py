@@ -10,6 +10,8 @@ urlpatterns = [
     path("register_user/", views.register_user, name="register_user"),
     path("update_user/<int:id_user>/", views.update_user, name="upadate_user"),
     path("delete_user/<int:id_user>/", views.delete_user, name="delete_user"),
+    path("alter_password/<int:id_user>/", views.alter_password, name="alter_password"),
+    path("register_client/<int:id_event>/", views.register_client, name="register_client"),
     # events
     path("deteils_event/<int:id_event>/", views.deteils_event, name="deteils_event"),
     path("buy_ticket/<int:id_event>/", views.buy_ticket, name="buy_ticket"),
@@ -19,8 +21,8 @@ urlpatterns = [
     path("tickets/<int:id_event>/", views.tickets_generate, name="tickets"),
     path("ticket/<str:ticket_id>/export-pdf", views.export_ticket_pdf, name="export_ticket_pdf"),
     # setores
-    path("list_user/<int:id_event>/", views.list_setor, name="list_setores"),
-    path("register_setor/", views.register_setor, name="register_setor"),
+    path("list_setor/<int:id_event>/", views.list_setor, name="list_setores"),
+    path("register_setor/<int:event_id>/", views.register_setor, name="register_setor"),
     path("update_setor/<int:id_setor>/", views.update_setor, name="update_setor"),
     path("delete_setor/<int:id_setor>/", views.delete_setor, name="delete_setor")
 ]
